@@ -26,7 +26,7 @@ const SAMPLE_RATE = 1000; // points per s
 
 fetch(
   document.head.baseURI +
-    "examples/assets/lcjs_example_0508_dashboardMedical-medical-data.json"
+    "examples/assets/0508/medical-data.json"
 )
   .then((r) => r.json())
   .then((data) => {
