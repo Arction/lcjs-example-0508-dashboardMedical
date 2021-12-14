@@ -88,5 +88,5 @@ Direct developer email support can be purchased through a [Support Plan][4] or b
 [Solid FillStyle]: https://www.arction.com/lightningchart-js-api-documentation/v3.3.0/classes/solidfill.html
 [HEX color factory]: https://www.arction.com/lightningchart-js-api-documentation/v3.3.0/globals.html#colorhex
 [Solid LineStyle]: https://www.arction.com/lightningchart-js-api-documentation/v3.3.0/classes/solidline.html
-[Synchronize axis intervals]: https://www.arction.com/lightningchart-js-api-documentation/v3.3.0/
+[Synchronize axis intervals]: https://www.arction.com/lightningchart-js-api-documentation/v3.3.0/globals.html#synchronizeaxisintervals
 
