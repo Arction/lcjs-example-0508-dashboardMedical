@@ -7,14 +7,11 @@ const {
     AxisScrollStrategies,
     AxisTickStrategies,
     AutoCursorModes,
-    ColorHEX,
     emptyFill,
     SolidFill,
     emptyLine,
-    SolidLine,
     lightningChart,
     synchronizeAxisIntervals,
-    translatePoint,
     UIOrigins,
     UIElementBuilders,
     UILayoutBuilders,
@@ -117,7 +114,7 @@ fetch(document.head.baseURI + 'examples/assets/0508/medical-data.json')
             const axisY = chart.getDefaultAxisY()
             const channel = channels[i]
             const ui = chart
-                .addUIElement(UILayoutBuilders.Column)
+                .addUIElement(UILayoutBuilders.Column, chart.coordsRelative)
                 .setBackground((background) => background.setFillStyle(emptyFill).setStrokeStyle(emptyLine))
                 .setMouseInteractions(false)
                 .setVisible(false)
@@ -134,21 +131,25 @@ fetch(document.head.baseURI + 'examples/assets/0508/medical-data.json')
             let labelBpmValue
             if (channel.name === 'Electrocardiogram') {
                 const labelBpm = ui.addElement(UIElementBuilders.TextBox).setMargin({ top: 10 }).setText('BPM')
-
                 labelBpmValue = ui
                     .addElement(UIElementBuilders.TextBox)
                     .setText('')
                     .setTextFont((font) => font.setSize(36))
             }
 
-            requestAnimationFrame(() => {
+            const positionUI = () => {
                 ui.setVisible(true)
                     .setPosition(
-                        translatePoint({ x: axisX.getInterval().end, y: axisY.getInterval().end }, { x: axisX, y: axisY }, chart.uiScale),
+                        chart.translateCoordinate(
+                            { x: axisX.getInterval().end, y: axisY.getInterval().end },
+                            chart.coordsAxis,
+                            chart.coordsRelative,
+                        ),
                     )
                     .setOrigin(UIOrigins.LeftTop)
                     .setMargin({ left: 10 })
-            })
+            }
+            chart.onResize(positionUI)
 
             return {
                 labelSampleRate,
