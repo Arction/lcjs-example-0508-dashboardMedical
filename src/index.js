@@ -56,6 +56,7 @@ fetch(document.head.baseURI + 'examples/assets/0508/medical-data.json')
                 yEnd: 0.155,
             },
         ]
+        // NOTE: Using `Dashboard` is no longer recommended for new applications. Find latest recommendations here: https://lightningchart.com/js-charts/docs/basic-topics/grouping-charts/
         const dashboard = lightningChart()
             .Dashboard({
                 numberOfRows: channels.length,
