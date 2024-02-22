@@ -104,7 +104,11 @@ fetch(document.head.baseURI + 'examples/assets/0508/medical-data.json')
             } else {
                 axisX
                     .setTickStrategy(AxisTickStrategies.Time)
-                    .setInterval({ start: -TIME_DOMAIN, end: 0, stopAxisAfter: false })
+                    .setDefaultInterval((state) => ({
+                        end: state.dataMax,
+                        start: (state.dataMax ?? 0) - TIME_DOMAIN,
+                        stopAxisAfter: false,
+                    }))
                     .setScrollStrategy(AxisScrollStrategies.progressive)
             }
             return chart
