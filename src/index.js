@@ -61,7 +61,7 @@ fetch(document.head.baseURI + 'examples/assets/0508/medical-data.json')
             .Dashboard({
                 numberOfRows: channels.length,
                 numberOfColumns: 1,
-                // theme: Themes.darkGold
+                theme: Themes[new URLSearchParams(window.location.search).get('theme') || 'darkGold'] || undefined,
             })
             .setRowHeight(0, 0.4)
             .setRowHeight(1, 0.3)
