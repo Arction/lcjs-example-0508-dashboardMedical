@@ -61,7 +61,7 @@ fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pat
             .Dashboard({
                 numberOfRows: channels.length,
                 numberOfColumns: 1,
-                theme: Themes[new URLSearchParams(window.location.search).get('theme') || 'darkGold'] || undefined
+                theme: Themes[new URLSearchParams(window.location.search).get('theme') || 'darkGold'] || undefined,
             })
             .setRowHeight(0, 0.4)
             .setRowHeight(1, 0.3)
