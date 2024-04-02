@@ -21,7 +21,7 @@ const {
 const TIME_DOMAIN = 10 * 1000
 const SAMPLE_RATE = 1000 // points per s
 
-fetch(document.head.baseURI + 'examples/assets/0508/medical-data.json')
+fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pathname + 'examples/assets/0508/medical-data.json')
     .then((r) => r.json())
     .then((data) => {
         const { ecg, bloodPressure, bloodVolume, bloodOxygenation } = data
