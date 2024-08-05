@@ -2,7 +2,7 @@
  * LightningChart JS example showcasing a medical Dashboard.
  */
 
-const lcjs = require('@arction/lcjs')
+const lcjs = require('@lightningchart/lcjs')
 const {
     AxisScrollStrategies,
     AxisTickStrategies,
@@ -56,8 +56,8 @@ fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pat
             })
             .setTitle('Medical Dashboard')
             .setMouseInteractions(false)
-            .setAutoCursorMode(AutoCursorModes.disabled)
             .setPadding({ right: 140 })
+            .setCursor((cursor) => cursor.setTickMarkerYVisible(false).setGridStrokeYStyle(emptyLine))
         chart.getDefaultAxisY().dispose()
         const axisECG = chart.addAxisY({ iStack: 3 }).setLength({ relative: 0.4 })
         const axisNIBP = chart.addAxisY({ iStack: 2 }).setLength({ relative: 0.3 })
