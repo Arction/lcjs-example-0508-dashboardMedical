@@ -55,7 +55,6 @@ fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pat
                 theme: Themes[new URLSearchParams(window.location.search).get('theme') || 'darkGold'] || undefined,
             })
             .setTitle('Medical Dashboard')
-            .setMouseInteractions(false)
             .setPadding({ right: 140 })
             .setCursor((cursor) => cursor.setTickMarkerYVisible(false).setGridStrokeYStyle(emptyLine))
         chart.getDefaultAxisY().dispose()
@@ -76,11 +75,7 @@ fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pat
             .setScrollStrategy(AxisScrollStrategies.progressive)
 
         const channelsComponents = channels.map((channel, i) => {
-            const axisY = yAxisList[i]
-                .setMouseInteractions(false)
-                .setTickStrategy(AxisTickStrategies.Empty)
-                .setStrokeStyle(emptyLine)
-                .setAnimationScroll(false)
+            const axisY = yAxisList[i].setTickStrategy(AxisTickStrategies.Empty).setStrokeStyle(emptyLine).setAnimationScroll(false)
             const series = chart
                 .addPointLineAreaSeries({
                     dataPattern: 'ProgressiveX',
@@ -108,8 +103,7 @@ fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pat
             const ui = chart
                 .addUIElement(UILayoutBuilders.Column, chart.coordsRelative)
                 .setBackground((background) => background.setFillStyle(emptyFill).setStrokeStyle(emptyLine))
-                .setMouseInteractions(false)
-                .setVisible(false)
+                .setPointerEvents(false)
 
             ui.addElement(UIElementBuilders.TextBox).setText(channel.shortName)
             ui.addElement(UIElementBuilders.TextBox)
@@ -128,22 +122,12 @@ fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pat
                     .setText('')
                     .setTextFont((font) => font.setSize(36))
             }
-
-            const positionUI = () => {
-                ui.setVisible(true)
-                    .setPosition(
-                        chart.translateCoordinate(
-                            { x: axisX.getInterval().end, y: axisY.getInterval().end },
-                            { x: axisX, y: axisY },
-                            chart.coordsRelative,
-                        ),
-                    )
-                    .setOrigin(UIOrigins.LeftTop)
-                    .setMargin({ left: 10 })
-            }
-            chart.onResize(positionUI)
-            requestAnimationFrame(positionUI)
-
+            chart.addEventListener('layoutchange', (event) => {
+                ui.setOrigin(UIOrigins.LeftTop).setPosition({
+                    x: event.margins.left + event.viewportWidth,
+                    y: event.axes.get(axisY).bottom + event.axes.get(axisY).height,
+                })
+            })
             return {
                 labelSampleRate,
                 labelBpmValue,
